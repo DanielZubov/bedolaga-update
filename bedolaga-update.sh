@@ -31,7 +31,16 @@ docker rm -f tmp_cabinet
 echo "[6/7] Перезапуск сервисов..."
 docker-compose down 2>/dev/null || docker compose down
 docker-compose up -d --build 2>/dev/null || docker compose up -d --build
-systemctl restart nginx
+
+echo "[6.1/7] Перезапуск Caddy..."
+caddy reload --config /etc/caddy/Caddyfile 2>/dev/null || systemctl reload caddy
+# Проверяем статус Caddy
+if systemctl is-active --quiet caddy; then
+    echo "Caddy успешно перезапущен"
+else
+    echo "ОШИБКА: Caddy не запустился! Проверьте: systemctl status caddy"
+    exit 1
+fi
 
 echo "[7/7] Очистка неиспользуемых образов..."
 docker image prune -f

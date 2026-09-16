@@ -8,7 +8,7 @@ git config --global --add safe.directory /opt/remnawave-bedolaga-telegram-bot 2>
 # Переход в директорию бота
 cd /opt/remnawave-bedolaga-telegram-bot || { echo "Ошибка: директория бота не найдена"; exit 1; }
 
-echo "[1/7] Скачиваем образ бота..."
+echo "[1/8] Скачиваем образ бота..."
 if git pull 2>&1; then
     echo "Git pull успешно выполнен"
 else
